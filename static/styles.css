@@ -119,3 +119,12 @@ input:focus {
     gap: 10px;
     margin: 40px;
 }
+
+@media (max-width: 1000px) {
+    .grid {
+        grid-template-columns: repeat(1, 1fr);
+        margin: 0px;
+        gap: 5px;
+        width: 100vw;
+    }
+}
