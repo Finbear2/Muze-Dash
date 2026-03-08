@@ -10,7 +10,7 @@ import os
 sql.init()
 threading.Thread(target=web.app.run, kwargs={"host": "0.0.0.0", "port": 5000}, daemon=True).start()
 
-testing=False
+testing=True
 
 while True:
     if not testing:

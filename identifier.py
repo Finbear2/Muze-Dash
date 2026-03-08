@@ -1,4 +1,4 @@
-from identifier_shazam import identify
+from shazam import identify
 import sounddevice
 import asyncio
 import numpy
@@ -57,7 +57,7 @@ def record(sz:int = sampleSize, sr:int = sampleRate, internet:bool = True):
 
     _, data = scipy.io.wavfile.read("temp.wav")
     print(numpy.abs(data).mean())
-    if numpy.abs(data).mean() < 5350:
+    if numpy.abs(data).mean() < 4800:
         print("Clip too quiet, skipping!")
         return None
 
