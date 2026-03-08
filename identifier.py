@@ -57,7 +57,7 @@ def record(sz:int = sampleSize, sr:int = sampleRate, internet:bool = True):
 
     _, data = scipy.io.wavfile.read("temp.wav")
     print(numpy.abs(data).mean())
-    if numpy.abs(data).mean() < 4800:
+    if numpy.abs(data).mean() < 3500:
         print("Clip too quiet, skipping!")
         return None
 

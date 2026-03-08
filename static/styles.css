@@ -56,6 +56,37 @@ a:active {
     padding: 5px;
 }
 
+button {
+    box-shadow: 5px 5px black;
+    padding: 5px;
+    margin: 5px;
+    font-size: 20px;
+    font-weight: normal;
+    border: 2px solid black;
+    border-radius: 0px;
+    background-color: rgb(119, 134, 220);
+    transition: 0.3s;
+    width: fit-content;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+}
+
+button:hover {
+    padding: 7px;
+    background-color: rgb(242, 248, 255);
+    box-shadow: 7px 7px black;
+}
+
+button:active {
+    transition: 0.05s;
+    translate: 5px 5px;
+    box-shadow: none;
+    background-color: rgb(110, 110, 110);
+    padding: 5px;
+}
+
+
 input {
     box-shadow: 5px 5px black;
     padding: 5px;
@@ -130,6 +161,12 @@ input:focus {
         font-size: 40px;
     }
     a {
+        font-size: 50px;
+        padding: 15px;
+        box-shadow: 10px 10px black;
+        border: 5px solid black;
+    }
+    button {
         font-size: 50px;
         padding: 15px;
         box-shadow: 10px 10px black;
