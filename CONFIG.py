@@ -1,7 +1,8 @@
 SETTINGS = {
-    "WEB UI": { # DON'T CHANGE
+    "WEB UI": {
         "host": "0.0.0.0", 
-        "port": 5000
+        "port": 5000,
+        "album art": True
     },
     "IDENTIFIACTION": {
         "inbetween time": 60, # Time inbetween each recording in seconds

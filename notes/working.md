@@ -18,6 +18,8 @@
   - PI GPIO 20 -> DATA
 - ESP32 -> BUTTON
 
+sudo systemctl restart avahi-daemon nginx
+
 ## Sleep Modes
 
  1. Light Sleep - After 5-10 minutes of silence, the PI is halted vai GPIO pin 5 command and ESP32 monitors sound. Can be woken from sleep with GPIO pin 3 and takes 3-5 seconds to turn back on again.

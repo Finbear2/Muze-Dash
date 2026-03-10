@@ -1,0 +1,6 @@
+/resources/
+/database/
+/_pycache/
+
+*.png
+*.wav

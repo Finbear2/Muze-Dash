@@ -179,7 +179,7 @@ input:focus {
         width: 100vw;
     }
     .card {
-        height: calc(100vh/3);
+        padding: 50px;
         border: 5px solid black;
     }
 }

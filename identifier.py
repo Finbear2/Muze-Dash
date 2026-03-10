@@ -117,7 +117,7 @@ def record(sz:int = sampleSize, sr:int = sampleRate, internet:bool = True):
             return None
 
     else:
-        lastSong = "None"
+        lastSong = {}
         filename = f"offline_{int(time.time())}.wav"
         os.rename("temp.wav", f"offline/{filename}")
         print("Offline, song saved to queue!")

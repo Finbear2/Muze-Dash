@@ -14,24 +14,48 @@ click==8.3.1
 dataclass-factory==2.16
 Flask==3.1.3
 frozenlist==1.8.0
+gpiod==2.4.0
+gpiodevice==0.0.5
 idna==3.11
+ImageIO==2.37.3
+importlib_resources==6.5.2
+inky==2.3.0
+IT8951 @ git+https://github.com/GregDMeyer/IT8951.git@9f136139378f74e17d9972d7165dc6ae53a2568e
 itsdangerous==2.2.0
+Jetson.GPIO==2.1.12
 Jinja2==3.1.6
+joblib==1.5.3
+lazy-loader==0.5
+llvmlite==0.46.0
 MarkupSafe==3.0.3
 multidict==6.7.1
+networkx==3.6.1
+numba==0.64.0
 numpy==2.4.2
+omni_epd @ git+https://github.com/robweber/omni-epd.git@6bfcb2e8857e4ba33714dff05ae21489541a549a
+packaging==26.0
+pillow==12.1.1
 propcache==0.4.1
 pycparser==3.0
 pydantic==2.12.5
 pydantic_core==2.41.5
 pydub==0.25.1
+pyxelate @ git+https://github.com/sedthh/pyxelate.git@f4a046b8b148370a20ab7681fce160551e5fc49b
 requests==2.32.5
+RPi.GPIO==0.7.1
+scikit-image==0.26.0
+scikit-learn==1.8.0
 scipy==1.17.1
 shazamio==0.8.1
 shazamio_core==1.1.2
+smbus2==0.6.0
 sounddevice==0.5.5
+spidev==3.8
+threadpoolctl==3.6.0
+tifffile==2026.3.3
 typing-inspection==0.4.2
 typing_extensions==4.15.0
 urllib3==2.6.3
+waveshare-epd @ git+https://github.com/waveshareteam/e-Paper.git@86aa9932f471a50157cf02fafadc2c1b4a965449#subdirectory=RaspberryPi_JetsonNano/python
 Werkzeug==3.1.6
 yarl==1.23.0

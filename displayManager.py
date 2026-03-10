@@ -9,6 +9,7 @@ displayedSong = "None"
 mode = "list"
 
 def drawTopBar(draw:ImageDraw.Draw, status:str):
+    print("Drawing top bar...")
 
     if funcs.hasInternet():
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -23,10 +24,13 @@ def drawTopBar(draw:ImageDraw.Draw, status:str):
 
     draw.line([(0,15), (250,15)], fill=0, width=1)
 
+    print("Finished drawing top bar!")
     return draw
 
 def displaySong(draw:ImageDraw.Draw, songimformation:dict, image:Image.new):
     global displayedSong
+
+    print("Drawing song view...")
 
     topSong = songimformation[0]
     title = topSong["title"]
@@ -35,11 +39,11 @@ def displaySong(draw:ImageDraw.Draw, songimformation:dict, image:Image.new):
 
     displayedSong = title
 
+    wrappedTitle = textwrap.fill(title, width=17)
     wrappedArtist = textwrap.fill(artist, width=17)
     wrappedAlbum = textwrap.fill(album, width=17)
 
-    draw.text((141,25), title, fill=0)
-    draw.text((141,45), f"{wrappedArtist}\n{wrappedAlbum}", fill=0)
+    draw.text((141,25), f"{wrappedTitle}\n\n{wrappedArtist}\n{wrappedAlbum}", fill=0)
 
     draw.ellipse([(15, 30.5), (15+76, 30.5+76)])
     draw.ellipse([(43.5, 59), (43.5+19, 59+19)])
@@ -50,22 +54,28 @@ def displaySong(draw:ImageDraw.Draw, songimformation:dict, image:Image.new):
     cover = Image.open("resources/cover.png").convert('1')
     image.paste(cover, (49,24))
 
+    print("Finished drawing!")
     return draw, image
 
 def displayList(draw:ImageDraw.Draw, songimformation):
     global displayedSong
     displayedSong = "None"
 
+    print("Drawing song list...")
+
     for i in range(len(songimformation)):
+        print(f"Drawing song {i+1}...")
         song = songimformation[i]
         title = song["title"]
         artist = song["artist"]
 
         draw.text((10,25+(15*i)), f"{title} - {artist}", fill=0)
 
+    print("Done drawing song list!")
     return draw
 
 def update(songimformation:dict, status:str):
+    print("\nUpdating screen...")
 
     # swap "omni_epd.mock" for "waveshare_epd.epd2in13_V2" when Pi arrives
     epd = displayfactory.load_display_driver("omni_epd.mock")
@@ -74,6 +84,7 @@ def update(songimformation:dict, status:str):
 
     image = Image.new("1", (250, 122), 255)
     draw = ImageDraw.Draw(image)
+    print("New image buffer created!")
 
     draw = drawTopBar(draw, status)
 
@@ -82,7 +93,9 @@ def update(songimformation:dict, status:str):
     elif mode == "list":
         draw = displayList(draw, songimformation)
 
+    print("Pushing image buffer to screen...")
     epd.display(image)
+    print("Done, screen is updated!\n")
     epd.close()
     
 
