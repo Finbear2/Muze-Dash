@@ -11,11 +11,18 @@ async def identify(path:str = "temp.wav", raw:bool = False):
     elif len(result["matches"]) == 0:
         return None
     track = result["track"]
+    released = 0000
+
+    try:
+        released = track["sections"][0]["metadata"][2]["text"]
+    except:
+        print("Couldn't retrieve date")
+
     data = {
         "title": track["title"],
         "artist": track["subtitle"],
         "album": track["sections"][0]["metadata"][0]["text"],
-        "released": track["sections"][0]["metadata"][2]["text"],
+        "released": released,
         "link": {
             "shazam": track["share"]["href"],
             "spotify": f"https://open.spotify.com/search/{urllib.parse.quote(track['title'] + ' ' + track['subtitle'])}"

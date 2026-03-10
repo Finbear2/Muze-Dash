@@ -15,11 +15,13 @@ threading.Thread(target=web.app.run, kwargs={"host": SETTINGS["WEB UI"]["host"],
 
 testing=False
 
-if testing: print("Testing, will not listen only display wepage!");
+if testing:
+    print("Testing, will not listen only display wepage!")
+    displayManager.update(sql.get(6), "Testing")
 
-while True:
-    if not testing:
 
+if not testing:
+    while True:
         if funcs.hasInternet():
             
             if len(os.listdir("offline")) > 0:
@@ -42,22 +44,22 @@ while True:
                 if displayManager.displayedSong != identifier.lastSong["title"]:
                     if deezer.getAlbumCover(identifier.lastSong["artist"], identifier.lastSong["title"]):
 
-                        print("Updating screen...")
                         displayManager.mode = "music"
                         displayManager.update(sql.get(6), "Idle")
 
             elif not identifier.songPlaying:
 
-                print("Updating screen...")
                 displayManager.mode = "list"
                 displayManager.update(sql.get(6), "Idle")
-                print("Done!")
+                
         else:
 
             print("Using offline mode as user hasn't got internet!")
             sql.write(identifier.record(internet=False))
-            print("Updating screen...")
             displayManager.mode = "list"
             displayManager.update(sql.get(6), "Idle")
 
-    time.sleep(random.randint(SETTINGS["IDENTIFIACTION"]["inbetween time"]-10,SETTINGS["IDENTIFIACTION"]["inbetween time"]+10))
+        sleepTime = random.randint(SETTINGS["IDENTIFIACTION"]["inbetween time"]-10,SETTINGS["IDENTIFIACTION"]["inbetween time"]+10)
+
+        print(f"Done cycle, waiting {sleepTime} seconds for next cycle!")
+        time.sleep(sleepTime)
