@@ -4,8 +4,12 @@ Identify every song around you that plays viewable on a Web-UI and on the E-Ink 
 
 **This project is in beta and not yet tested on hardware and support is not garunteed!**
 
+@Fin 2026
+
 <img src="resources/Buddy Holly-Weezer.png" width="500"/>
 <img src="resources/Read My Mind-The Killers.png" width="500"/>
+
+----
 
 ## What is it?
 
@@ -13,10 +17,12 @@ Canto is a little device designed to be ran on harware such as a Pi Zero that us
 
 In it's current stage of development, it is fully coded but stl files for a case and any hardware specific features have not been made. Though, using a mock driver I was able to code a screen though the drivers need changing and maybe certain implementations will need fixing.
 
-## Progress Report
+## Hardware
 
-So far it is only designed to run on a laptop and identify songs every 60 seconds with a flask web UI. It does not intergrate with the harware at the moment or probally work with it. Also it needs python3.11 because shazamIO hates me. Right now I have spotify open on my phone with a terminal open on one screen looking as it regocnises songs to test out accuracy. You can try it out if you want on a dessktop but... don't
+This software is ideally ran on a
 
-## Vision
+- PI Zero 2 WH
+- Waveshare 2.13" E-Ink screen (This at the moment cannot be changed)
+- IS2 MEM microphone
 
-A e-ink keyring with an esp 32 for sound monitoring and a proper MEM mic and a sound sensor for the esp 32
+Once the software is tested on device, I will provide a linux image that will have everything pre-configured
