@@ -1,6 +1,6 @@
 SETTINGS = {
     "GENERAL": {
-        "testing": False,
+        "testing": True,
         "shared secret": "Fish",
         "server url": "http://192.168.0.119:5000",
     },

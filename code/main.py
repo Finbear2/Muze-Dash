@@ -1,27 +1,66 @@
+"""
+████████████████████ ████████ █████████████████    _____            _        
+█░▒▓██       ███▓▒░█ █░░░░░░█ █░░░░░░░░░░░░░░░█   / ____|          | |       
+█░▓█            █▓▒█ █░░░░░░█ █░░░░░░░░░░░░░░░█  | |     __ _ _ __ | |_ ___  
+█▓█              █▓█ █░░░░░░█ █░░░░░░░░░░░░░░░█  | |    / _` | '_ \| __/ _ \ 
+██      ████      ██ █░░░░░░█ █░░░░░░░░░░░░░░░█  | |___| (_| | | | | || (_) |
+██      ████      ██ █░░░░░░█ █████████████████   \_____\__,_|_| |_|\__\___/ 
+█▓█              █▓█ █░░░░░░█                    
+█▒▓█            █▓░█ █░░░░░░█ █████████████████  Version 0.1
+█░░▓██        ██▓░▒█ █░░░░░░█ ██             ██  @Finbear2 2026   
+████████████████████ ████████ █████████████████  
+"""
+
+
+
+#
+#  _                     _      
+# (_)_ __  _ __  ___ _ _| |_ ___
+# | | '  \| '_ \/ _ \ '_|  _(_-<
+# |_|_|_|_| .__/\___/_|  \__/__/
+#         |_|                   
+
+import asyncio
+import random
+import time
+import os
+
+# Import other modules
 from CONFIG import SETTINGS
 import displayManager
 import identifier
-import asyncio
 import deezer
-import random
 import funcs
-import time
 import sql
-import os
 
+
+
+#  _      _ _      
+# (_)_ _ (_) |_ ___
+# | | ' \| |  _(_-<
+# |_|_||_|_|\__/__/
+
+# Print logo cause vibeseseses
 funcs.logo()
 
+# Configure paths
 baseDir = os.path.dirname(os.path.abspath(__file__))
 offlinePath = os.path.join(baseDir, "offline")
 
-displayManager.initScreen()
-
+# Initialise the sql database
 if funcs.hasInternet():
     asyncio.run(sql.init())
 else:
-    print("No internet, database initialization failed!")
+    print("Couldn't comunicate to server!")
 
-if SETTINGS["GENERAL"]["testing"]:
+
+
+#             _      
+#  _ __  __ _(_)_ _  
+# | '  \/ _` | | ' \ 
+# |_|_|_\__,_|_|_||_|
+
+if SETTINGS["GENERAL"]["testing"]:   # Testing mode
 
     print("Testing, will not listen only display webage!")
     songs = asyncio.run(sql.get(6))
@@ -31,7 +70,7 @@ if SETTINGS["GENERAL"]["testing"]:
         songs = asyncio.run(sql.get(6))
         displayManager.update(songs, "Testing")
 
-else:
+else: # Full Mode
 
     while True:
         try:

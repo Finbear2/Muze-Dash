@@ -6,8 +6,7 @@ logoPath = os.path.join(baseDir, "resources", "logo.txt")
 
 def logo():
     with open(logoPath, "r") as f:
-        logoText = f.read()
-    print(logoText)
+        print(f.read())
 
 def hasInternet(url:str = "http://google.com"):
     try:

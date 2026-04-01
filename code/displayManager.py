@@ -18,20 +18,14 @@ coverPath = os.path.join(baseDir, "resources", "cover.png")
 epd = None
 connected = SETTINGS["DISPLAY"]["connected"]
 
-def initScreen():
-    if not connected: return None;
-
+if connected:
     from waveshare_epd import epd2in13_V4
 
     global epd
     epd = epd2in13_V4.EPD()
     print("Screen Initialised")
 
-    epd.init()
-    epd.Clear(0xFF)
-
 def drawTopBar(draw:ImageDraw.Draw, status:str):
-    if not connected: return None;
     print("Drawing top bar...")
 
     if funcs.hasInternet():
@@ -51,7 +45,6 @@ def drawTopBar(draw:ImageDraw.Draw, status:str):
     return draw
 
 def displaySong(draw:ImageDraw.Draw, songimformation:dict, image:Image.new):
-    if not connected: return None;
     global displayedSong
 
     print("Drawing song view...")
@@ -80,7 +73,6 @@ def displaySong(draw:ImageDraw.Draw, songimformation:dict, image:Image.new):
     return draw, image
 
 def displayList(draw:ImageDraw.Draw, songimformation):
-    if not connected: return None;
     global displayedSong
     displayedSong = "None"
 
@@ -120,7 +112,7 @@ def update(songimformation:dict, status:str):
     print("Pushing image buffer to screen...")
 
     refreshes += 1
-    if refreshes == SETTINGS["DISPLAY"]["full refresh counter"]:
+    if refreshes >= SETTINGS["DISPLAY"]["full refresh counter"]:
         epd.display(epd.getbuffer(image))
         refreshes = 0
     else:
