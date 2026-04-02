@@ -4,10 +4,12 @@ After=network.target
 
 [Service]
 # Change these!
-ExecStart=/usr/bin/python3.11 /path/to/your/script.py
+ExecStart=/usr/bin/python -u /home/pi/null/code/main.py
 Restart=always
-User=youruser
-WorkingDirectory=/path/to/your/project/
+User=pi
+WorkingDirectory=/home/pi/null/code
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target

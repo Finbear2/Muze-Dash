@@ -1,4 +1,4 @@
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 from CONFIG import SETTINGS
 import textwrap
@@ -21,7 +21,8 @@ connected = SETTINGS["DISPLAY"]["connected"]
 if connected:
     from waveshare_epd import epd2in13_V4
 
-    global epd
+    font = ImageFont.load("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", SETTINGS["DISPLAY"]["font size"])
+
     epd = epd2in13_V4.EPD()
     print("Screen Initialised")
 
@@ -34,10 +35,10 @@ def drawTopBar(draw:ImageDraw.Draw, status:str):
         ip = s.getsockname()[0]
         s.close()
 
-        draw.text((7, 2), f"WIFI-{ip}", fill=0)
+        draw.text((7, 2), f"WIFI-{ip}", font=font, fill=0)
 
-    textLength = draw.textlength(f"{datetime.now().strftime('%H:%M')}-{status}")
-    draw.text((243-textLength, 2), f"{datetime.now().strftime('%H:%M')}-{status}", fill=0)
+    textLength = draw.textlength(f"{datetime.now().strftime('%H:%M')}-{status}", font=font)
+    draw.text((243-textLength, 2), f"{datetime.now().strftime('%H:%M')}-{status}", font=font, fill=0)
 
     draw.line([(0,15), (250,15)], fill=0, width=1)
 
@@ -58,7 +59,7 @@ def displaySong(draw:ImageDraw.Draw, songimformation:dict, image:Image.new):
     wrappedArtist = textwrap.fill(artist, width=17)
     wrappedAlbum = textwrap.fill(album, width=17)
 
-    draw.text((141,25), f"{wrappedTitle}\n\n{wrappedArtist}\n{wrappedAlbum}", fill=0)
+    draw.text((141,25), f"{wrappedTitle}\n\n{wrappedArtist}\n{wrappedAlbum}", font=font, fill=0)
 
     draw.ellipse([(15, 30.5), (15+76, 30.5+76)])
     draw.ellipse([(43.5, 59), (43.5+19, 59+19)])
@@ -84,7 +85,7 @@ def displayList(draw:ImageDraw.Draw, songimformation):
         title = song["title"]
         artist = song["artist"]
 
-        draw.text((10,25+(15*i)), f"{title} - {artist}", fill=0)
+        draw.text((10,25+(15*i)), f"{title} - {artist}", font=font, fill=0)
 
     print("Done drawing song list!")
     return draw
@@ -110,6 +111,8 @@ def update(songimformation:dict, status:str):
         draw = displayList(draw, songimformation)
 
     print("Pushing image buffer to screen...")
+
+    epd.init()
 
     refreshes += 1
     if refreshes >= SETTINGS["DISPLAY"]["full refresh counter"]:

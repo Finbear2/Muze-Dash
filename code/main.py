@@ -51,7 +51,7 @@ offlinePath = os.path.join(baseDir, "offline")
 if funcs.hasInternet():
     asyncio.run(sql.init())
 else:
-    print("Couldn't comunicate to server!")
+    print("Couldn't communicate to server!")
 
 
 
@@ -62,7 +62,9 @@ else:
 
 if SETTINGS["GENERAL"]["testing"]:   # Testing mode
 
-    print("Testing, will not listen only display webage!")
+    displayManager.mode = "list"
+
+    print("Testing, will not listen only display webpage!")
     songs = asyncio.run(sql.get(6))
     displayManager.update(songs, "Testing")
     while True:
@@ -75,8 +77,6 @@ else: # Full Mode
     while True:
         try:
             if funcs.hasInternet():
-
-                displayManager.mode = "list"
                 
                 if len(os.listdir(offlinePath)) > 0:
                     print("Syncing offline songs...")

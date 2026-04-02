@@ -3,7 +3,6 @@ import sqlite3
 import aiohttp
 
 sqlURL = f"{SETTINGS['GENERAL']['server url']}/sql"
-DB = SETTINGS["SQL"]["database path"]
 
 async def init():
     async with aiohttp.ClientSession() as session:
