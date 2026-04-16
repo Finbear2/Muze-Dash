@@ -21,9 +21,10 @@ connected = SETTINGS["DISPLAY"]["connected"]
 if connected:
     from waveshare_epd import epd2in13_V4
 
-    font = ImageFont.load("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", SETTINGS["DISPLAY"]["font size"])
+    font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", SETTINGS["DISPLAY"]["font size"])
 
     epd = epd2in13_V4.EPD()
+    epd.Clear()
     print("Screen Initialised")
 
 def drawTopBar(draw:ImageDraw.Draw, status:str):
@@ -67,7 +68,7 @@ def displaySong(draw:ImageDraw.Draw, songimformation:dict, image:Image.new):
     # Mid point is 67.5
     draw.rectangle([(48, 23), (137, 112)], outline=0, width=1, fill=255)
 
-    cover = Image.open(coverPath).convert('1')
+    cover = Image.open(coverPath).convert("1")
     image.paste(cover, (49,24))
 
     print("Finished drawing!")
@@ -130,6 +131,8 @@ def update(songimformation:dict, status:str):
                     epd.displayPartial(epd.getbuffer(image))
                 else:
                     epd.display(epd.getbuffer(image))
+            else:
+                epd.display(epd.getbuffer(image))
         else:
             epd.display(epd.getbuffer(image))
 

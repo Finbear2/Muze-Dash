@@ -65,7 +65,7 @@ def record(sz:int = sampleSize, sr:int = sampleRate, internet:bool = True):
     print("\nRecording...")
     
     if internet:
-        displayManager.update(displayManager.displayedSong, "Listening")
+        displayManager.update(asyncio.run(sql.get(6)), "Listening")
 
     audioData = sounddevice.rec(
         frames=int(sz*sr),
@@ -88,7 +88,8 @@ def record(sz:int = sampleSize, sr:int = sampleRate, internet:bool = True):
 
     if internet:
 
-        # --- INDENTIFY ---
+        # --- IDENTIFY ---#
+        displayManager.update(asyncio.run(sql.get(6)), "Identifying")
         data = asyncio.run(identify())
 
         os.remove("temp.wav")

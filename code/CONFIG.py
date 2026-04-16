@@ -2,7 +2,7 @@ SETTINGS = {
     "GENERAL": {
         "testing": False,
         "shared secret": "Fish",
-        "server url": "http://192.168.0.119:5000",
+        "server url": "https://canto.finbear.dev",
     },
     "IDENTIFIACTION": {
         "inbetween time": 60, # Time inbetween each recording in seconds
