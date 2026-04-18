@@ -11,7 +11,7 @@
     "identification": {
         "inbetween time": 60,
         "sync inbetween time": 5,
-        "noise threshold": 3000,
+        "noise threshold": 5,
         "sample rate": 44100,
         "sample size": 20
     },
@@ -19,6 +19,6 @@
         "connected": false,
         "full refresh counter": 3,
         "font size": 9,
-        "screen saver threshold": 2
+        "screen saver threshold": 6
     }
 }
