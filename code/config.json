@@ -18,6 +18,7 @@
     "display": {
         "connected": false,
         "full refresh counter": 3,
-        "font size": 9
+        "font size": 9,
+        "screen saver threshold": 2
     }
 }

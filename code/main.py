@@ -155,7 +155,7 @@ async def main():
                     displayManager.mode = "Blank"
 
                     if not muted:
-                        identifier.record(internet=False)
+                        await identifier.record(internet=False)
                         displayManager.update({}, "Offline")
                     else:
                         displayManager.update({}, "Offline-Muted")
@@ -171,11 +171,8 @@ async def main():
                     songs = await sql.get(6)
                     displayManager.update(songs, "Error")
                 else:
-                    if displayManager.mode == "list":
-                        displayManager.update(displayManager.lastList, "Error")
-                    else:
-                        displayManager.mode = "Blank"
-                        displayManager.update({}, "Error")
+                    displayManager.mode = "Blank"
+                    displayManager.update({}, "Error")
 
             sleepTime = random.randint(SETTINGS["identification"]["inbetween time"]-10,SETTINGS["identification"]["inbetween time"]+10)
 

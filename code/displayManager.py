@@ -2,6 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 from CONFIG import SETTINGS
 import textwrap
+import random
 import socket
 import funcs
 import os
@@ -11,9 +12,17 @@ mode = "music"
 lastMode = "list"
 lastList = {}
 refreshes = 0
+inactivity = 0
+lastData = {}
 
 baseDir = os.path.dirname(os.path.abspath(__file__))
 coverPath = os.path.join(baseDir, "resources", "cover.png")
+saverPath = os.path.join(baseDir, "resources", "screenSavers")
+
+screenSaverPaths = []
+
+for file in os.listdir(saverPath):
+    screenSaverPaths.append(os.path.join(saverPath, file))
 
 epd = None
 connected = SETTINGS["display"]["connected"]
@@ -26,6 +35,7 @@ if connected:
     epd = epd2in13_V4.EPD()
     epd.Clear()
     print("Screen Initialised")
+
 
 def drawTopBar(draw:ImageDraw.Draw, status:str):
     print("Drawing top bar...")
@@ -46,7 +56,8 @@ def drawTopBar(draw:ImageDraw.Draw, status:str):
     print("Finished drawing top bar!")
     return draw
 
-def displaySong(draw:ImageDraw.Draw, songimformation:dict, image:Image.new):
+
+def displaySong(draw:ImageDraw.Draw, songimformation:dict, image:Image):
     global displayedSong
 
     print("Drawing song view...")
@@ -91,6 +102,18 @@ def displayList(draw:ImageDraw.Draw, songimformation):
     print("Done drawing song list!")
     return draw
 
+
+def screenSaver(draw:ImageDraw.Draw, image:Image):
+    print("Drawing screen saver..")
+
+    saver = Image.open(random.choice(screenSaverPaths)).convert("1")
+    saver = saver.resize((255, 122), Image.NEAREST)
+    image.paste(saver, (0, 0))
+
+    print("Finished drawing!")
+    return draw, image
+
+
 def update(songimformation:dict, status:str):
     if not connected: return None;
     print("\nUpdating screen...")
@@ -99,19 +122,33 @@ def update(songimformation:dict, status:str):
     global displayedSong
     global lastMode
     global lastList
+    global lastData
+    global inactivity
 
     image = Image.new("1", (250, 122), 255)
     draw = ImageDraw.Draw(image)
     print("New image buffer created!")
 
-    draw = drawTopBar(draw, status)
+    if songimformation == lastData:
+        inactivity += 1
+    else:
+        inactivity = 0
+    lastData=songimformation
 
-    if mode == "music":
-        draw, image = displaySong(draw, songimformation, image)
-    elif mode == "list":
-        draw = displayList(draw, songimformation)
+    if inactivity >= SETTINGS["display"]["screen saver threshold"]:
 
-    print("Pushing image buffer to screen...")
+        draw, image = screenSaver(draw, image)
+
+    else:
+
+        draw = drawTopBar(draw, status)
+
+        if mode == "music":
+            draw, image = displaySong(draw, songimformation, image)
+        elif mode == "list":
+            draw = displayList(draw, songimformation)
+
+        print("Pushing image buffer to screen...")
 
     epd.init()
 
@@ -138,7 +175,8 @@ def update(songimformation:dict, status:str):
 
     lastMode = mode
     lastList = songimformation
-    displayedSong = songimformation[0]["title"]
+    if len(songimformation) >= 1:
+        displayedSong = songimformation[0]["title"]
 
     print("Done, screen is updated!\n")
     epd.sleep()

@@ -27,7 +27,7 @@ WantedBy=multi-user.target"""
 
 with open(os.path.join(baseDir, "canto.service"), "w", encoding="utf-8") as f:
     f.write(Service)
-    print("\nMade canto.service file to be moved to syctemctl location!\n")
+    print("Made canto.service file to be moved to syctemctl location!\n")
 
 name = input("Enter device name, can be changed later >>> ")
 SETTINGS["general"]["name"] = name
