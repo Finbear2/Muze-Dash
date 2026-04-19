@@ -13,7 +13,6 @@ lastMode = "list"
 lastList = {}
 refreshes = 0
 inactivity = 0
-lastData = {}
 
 baseDir = os.path.dirname(os.path.abspath(__file__))
 coverPath = os.path.join(baseDir, "resources", "cover.png")
@@ -33,7 +32,6 @@ if connected:
     font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", SETTINGS["display"]["font size"])
 
     epd = epd2in13_V4.EPD()
-    epd.Clear()
     print("Screen Initialised")
 
 
@@ -122,22 +120,25 @@ def update(songimformation:dict, status:str):
     global displayedSong
     global lastMode
     global lastList
-    global lastData
     global inactivity
 
     image = Image.new("1", (250, 122), 255)
     draw = ImageDraw.Draw(image)
     print("New image buffer created!")
 
-    if songimformation == lastData:
+    if songimformation == lastList:
         inactivity += 1
     else:
         inactivity = 0
-    lastData=songimformation
 
     if inactivity >= SETTINGS["display"]["screen saver threshold"]:
 
         draw, image = screenSaver(draw, image)
+        refreshes = 100
+
+        epd.init()
+
+        epd.display(epd.getbuffer(image))
 
     else:
 
@@ -150,28 +151,28 @@ def update(songimformation:dict, status:str):
 
         print("Pushing image buffer to screen...")
 
-    epd.init()
+        epd.init()
 
-    refreshes += 1
-    if refreshes >= SETTINGS["display"]["full refresh counter"]:
-        epd.display(epd.getbuffer(image))
-        refreshes = 0
-    else:
-        if mode == lastMode:
-            if mode == "music":
-                if displayedSong != songimformation[0]["title"]:
-                    epd.display(epd.getbuffer(image))
-                else:
-                    epd.displayPartial(epd.getbuffer(image))
-            elif mode == "list":
-                if songimformation == lastList:
-                    epd.displayPartial(epd.getbuffer(image))
+        refreshes += 1
+        if refreshes >= SETTINGS["display"]["full refresh counter"]:
+            epd.display(epd.getbuffer(image))
+            refreshes = 0
+        else:
+            if mode == lastMode:
+                if mode == "music":
+                    if displayedSong != songimformation[0]["title"]:
+                        epd.display(epd.getbuffer(image))
+                    else:
+                        epd.displayPartial(epd.getbuffer(image))
+                elif mode == "list":
+                    if songimformation == lastList:
+                        epd.displayPartial(epd.getbuffer(image))
+                    else:
+                        epd.display(epd.getbuffer(image))
                 else:
                     epd.display(epd.getbuffer(image))
             else:
                 epd.display(epd.getbuffer(image))
-        else:
-            epd.display(epd.getbuffer(image))
 
     lastMode = mode
     lastList = songimformation
