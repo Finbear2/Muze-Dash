@@ -2,6 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 from CONFIG import SETTINGS
 import textwrap
+import getpass
 import random
 import socket
 import funcs
@@ -16,12 +17,13 @@ inactivity = 0
 
 baseDir = os.path.dirname(os.path.abspath(__file__))
 coverPath = os.path.join(baseDir, "resources", "cover.png")
-saverPath = os.path.join(baseDir, "resources", "screenSavers")
+saverPath = os.path.join("home", getpass.getuser())
 
 screenSaverPaths = []
 
 for file in os.listdir(saverPath):
-    screenSaverPaths.append(os.path.join(saverPath, file))
+    if file.endswith(".png"):
+        screenSaverPaths.append(os.path.join(saverPath, file))
 
 epd = None
 connected = SETTINGS["display"]["connected"]
@@ -126,7 +128,7 @@ def update(songimformation:dict, status:str):
     draw = ImageDraw.Draw(image)
     print("New image buffer created!")
 
-    if songimformation == lastList:
+    if songimformation == lastList or songimformation == {}:
         inactivity += 1
     else:
         inactivity = 0

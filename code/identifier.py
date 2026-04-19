@@ -107,7 +107,7 @@ async def record(sz:int = sampleSize, sr:int = sampleRate, internet:bool = True)
             """)
             if len(lastSong) > 0:
                 song = await sql.get(1)
-                if lastSong["title"] == data["title"] and song[0]["title"] == data["title"]:
+                if lastSong["title"] == data["title"] or song[0]["title"] == data["title"]:
                     print("Song already identified!")
                     songPlaying = True
                     return None

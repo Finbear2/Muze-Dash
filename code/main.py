@@ -116,7 +116,8 @@ async def main():
 
                         for file in os.listdir(offlinePath):
                             if file.endswith(".wav"):
-                                await sql.write(identifier.sync(path=f"{offlinePath}/{file}"))
+                                data = await identifier.sync(path=f"{offlinePath}/{file}")
+                                await sql.write(data)
                             time.sleep(random.randint(
                                 SETTINGS["identification"]["sync inbetween time"],
                                 SETTINGS["identification"]["sync inbetween time"]+2)
@@ -136,8 +137,8 @@ async def main():
 
                         songs = await sql.get(6)
 
-                        if data:
-                            deezer.getAlbumCover(data["artist"], data["title"])
+                        if songPlaying:
+                            deezer.getAlbumCover(identifier.lastSong["artist"], identifier.lastSong["title"])
                             displayManager.mode = "music"
                         else:
                             displayManager.mode = "list"
@@ -175,6 +176,9 @@ async def main():
                     displayManager.update({}, "Error")
 
             sleepTime = random.randint(SETTINGS["identification"]["inbetween time"]-10,SETTINGS["identification"]["inbetween time"]+10)
+
+            if displayManager.inactivity >= SETTINGS["display"]["screen saver threshold"]:
+                sleepTime = sleepTime*2
 
             print(f"Done cycle, waiting {sleepTime} seconds for next cycle!")
             time.sleep(sleepTime)

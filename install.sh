@@ -16,6 +16,12 @@ fi
 
 cd Canto
 
+mkdir -p code/offline
+
+mv code/screenSavers/* ~/ 
+
+cd ..
+
 python3 setup.py
 
 sudo mv canto.service /etc/systemd/system/
