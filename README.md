@@ -51,8 +51,10 @@ and look for something like pi foundation
 ssh into the pi's ip address
   ssh username@ip_address
 
-once in, run this command
-  wget -O - https://raw.githubusercontent.com/Finbear2/Canto/main/install.sh | bash
+run this in the terminal
+wget -O install.sh https://raw.githubusercontent.com/Finbear2/Canto/main/install.sh
+chmod +x install.sh
+./install.sh
 
 Answer the questions and wait for reboot. It should display some art on the screen with the last song identified on your server.
 

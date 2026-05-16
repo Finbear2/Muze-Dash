@@ -137,7 +137,7 @@ async def main():
 
                         songs = await sql.get(6)
 
-                        if songPlaying:
+                        if identifier.songPlaying:
                             deezer.getAlbumCover(identifier.lastSong["artist"], identifier.lastSong["title"])
                             displayManager.mode = "music"
                         else:

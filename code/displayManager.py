@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 from CONFIG import SETTINGS
+from pathlib import Path
 import textwrap
 import getpass
 import random
@@ -17,7 +18,7 @@ inactivity = 0
 
 baseDir = os.path.dirname(os.path.abspath(__file__))
 coverPath = os.path.join(baseDir, "resources", "cover.png")
-saverPath = os.path.join("home", getpass.getuser())
+saverPath = Path.home()
 
 screenSaverPaths = []
 
