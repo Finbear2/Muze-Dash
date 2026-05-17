@@ -20,12 +20,6 @@ baseDir = os.path.dirname(os.path.abspath(__file__))
 coverPath = os.path.join(baseDir, "resources", "cover.png")
 saverPath = Path.home()
 
-screenSaverPaths = []
-
-for file in os.listdir(saverPath):
-    if file.endswith(".png"):
-        screenSaverPaths.append(os.path.join(saverPath, file))
-
 epd = None
 connected = SETTINGS["display"]["connected"]
 
@@ -106,6 +100,12 @@ def displayList(draw:ImageDraw.Draw, songimformation):
 
 def screenSaver(draw:ImageDraw.Draw, image:Image):
     print("Drawing screen saver..")
+
+    screenSaverPaths = []
+
+    for file in os.listdir(saverPath):
+        if file.endswith(".png"):
+            screenSaverPaths.append(os.path.join(saverPath, file))
 
     saver = Image.open(random.choice(screenSaverPaths)).convert("1")
     saver = saver.resize((255, 122), Image.NEAREST)
