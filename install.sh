@@ -18,7 +18,7 @@ cd Canto
 
 mkdir -p code/offline
 
-mv code/screenSavers/* ~/ 
+mv code/resources/screenSavers/* ~/ 
 
 python3 setup.py
 
