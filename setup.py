@@ -35,7 +35,7 @@ SETTINGS["general"]["name"] = name
 secret = input("Enter the shared secret of your server >>> ")
 SETTINGS["server"]["shared secret"] = secret
 
-url = input("Enter url of server, example: http://server_ip:port https://canto.your_domain or whatever you're hosting it as >>> ")
+url = input("Enter url of server, example: http://server_ip:port https://canto.your_domain or wherever you're hosting it >>> ")
 SETTINGS["server"]["server url"] = url
 
 SETTINGS["display"]["connected"] = True

@@ -79,7 +79,7 @@ async def main():
         if funcs.hasInternet():
 
             displayManager.mode = "music"
-
+            
             status = await funcs.getStatus(boot)
             boot = False
 
