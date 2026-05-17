@@ -178,8 +178,8 @@ def update(songimformation:dict, status:str):
                 epd.display(epd.getbuffer(image))
 
     lastMode = mode
-    lastList = songimformation
     if len(songimformation) >= 1:
+        lastList = songimformation
         displayedSong = songimformation[0]["title"]
 
     print("Done, screen is updated!\n")

@@ -95,7 +95,7 @@ async def record(sz:int = sampleSize, sr:int = sampleRate, internet:bool = True)
         displayManager.mode = "Blank"
         displayManager.update({}, "Microphone")
 
-        return None
+        return "Microphone"
     
     if internet:
         songs = await sql.get(6)

@@ -79,7 +79,7 @@ async def main():
         if funcs.hasInternet():
 
             displayManager.mode = "music"
-            
+
             status = await funcs.getStatus(boot)
             boot = False
 
@@ -133,17 +133,18 @@ async def main():
                     if not muted:
 
                         data = await identifier.record()
-                        await sql.write(data)
+                        if data != "Microphone":
+                            await sql.write(data)
 
-                        songs = await sql.get(6)
+                            songs = await sql.get(6)
 
-                        if identifier.songPlaying:
-                            deezer.getAlbumCover(identifier.lastSong["artist"], identifier.lastSong["title"])
-                            displayManager.mode = "music"
-                        else:
-                            displayManager.mode = "list"
+                            if identifier.songPlaying:
+                                deezer.getAlbumCover(identifier.lastSong["artist"], identifier.lastSong["title"])
+                                displayManager.mode = "music"
+                            else:
+                                displayManager.mode = "list"
 
-                        displayManager.update(songs, "idle")
+                            displayManager.update(songs, "idle")
 
                     else:
 
