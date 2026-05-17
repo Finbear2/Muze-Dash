@@ -22,6 +22,30 @@ sampleSize = SETTINGS["identification"]["sample size"]
 baseDir = os.path.dirname(os.path.abspath(__file__))
 offlinePath = os.path.join(baseDir, "offline")
 
+
+async def checkMic():
+    print("Checking microphone...")
+    try:
+        inp, out = sounddevice.default.device
+        if inp == -1:
+            print("Found issue! Fixing...")
+            sounddevice.default.reset()
+
+            inp, out = sounddevice.default.device
+            if inp == -1:
+                print("Couldn't fix! reatach microphone!")
+                return False
+            else:
+                print("Fixed issue!")
+
+        sounddevice.query_devices(inp)
+        print("Done with checks!")
+        return True
+    except:
+        print("Couldn't query device! reatach microphone!")
+        return False
+
+
 async def sync(sz:int = sampleSize, sr:int = sampleRate, path:str = "CHANGEME"):
     global lastSong
     global songPlaying
@@ -63,6 +87,15 @@ async def record(sz:int = sampleSize, sr:int = sampleRate, internet:bool = True)
 
     # --- RECORD ---
     print("\nRecording...")
+
+    inp, out = sounddevice.default.device
+
+    micResult = await checkMic()
+    if not micResult:
+        displayManager.mode = "Blank"
+        displayManager.update({}, "Microphone")
+
+        return None
     
     if internet:
         songs = await sql.get(6)

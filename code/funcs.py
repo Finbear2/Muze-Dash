@@ -17,10 +17,16 @@ def logo():
 async def getStatus(boot: bool):
 
     screenSaverPaths = []
+    
+    if SETTINGS["display"]["connected"]:
 
-    for file in os.listdir(saverPath):
-        if file.endswith(".png"):
-            screenSaverPaths.append(os.path.join(saverPath, file))
+        
+        print("Finding screensavers...")
+
+        for file in os.listdir(saversDir):
+            if file.endswith(".png"):
+                print(f"Found screensaver {file}!")
+                screenSaverPaths.append(os.path.join(saversDir, file))
 
     async with aiohttp.ClientSession() as session:
         async with session.post(

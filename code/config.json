@@ -2,11 +2,11 @@
     "general": {
         "name": "Tester",
         "version": 1,
-        "testing": true
+        "testing": false
     },
     "server": {
-        "shared secret": "dfas",
-        "server url": "asdf"
+        "shared secret": "Fish",
+        "server url": "https://canto.finbear.dev"
     },
     "identification": {
         "inbetween time": 60,
